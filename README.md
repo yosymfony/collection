@@ -1,6 +1,9 @@
 A set of classes for working with arrays of data.
 
-## requires
+[![Build Status](https://travis-ci.org/yosymfony/collection.svg?branch=master)](https://travis-ci.org/yosymfony/collection)
+[![Latest Stable Version](https://poser.pugx.org/yosymfony/collection/v/stable.png)](https://packagist.org/packages/yosymfony/collection)
+
+## Requires
 
 * PHP +7.2
 
