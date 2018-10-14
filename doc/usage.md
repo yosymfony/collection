@@ -5,8 +5,8 @@ Collections make easy to work with array of items. They have
 new collection instance. 
 
 ## Types
-* [Mixed collection](#Mixed-Collection)
-* [Read-only collection](Read-only-collection)
+* [Mixed collection](#mixed-collection)
+* [Read-only collection](#read-only-collection)
 
 ## Mixed collection
 
