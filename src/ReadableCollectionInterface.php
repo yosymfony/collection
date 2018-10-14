@@ -24,7 +24,7 @@ interface ReadableCollectionInterface extends Countable, IteratorAggregate
     public function all() : array;
 
     /**
-     * Find out if at least one item in the collection pass the given test expressed as a callback.
+     * Finds out if at least one item in the collection pass the given test expressed as a callback.
      *
      * @param callable $callback A callback with the following signature:
      * ```
@@ -36,7 +36,7 @@ interface ReadableCollectionInterface extends Countable, IteratorAggregate
     public function any(callable $callback) : bool;
 
     /**
-     * Find out if all items pass the given test expressed as a callback.
+     * Finds out if all items pass the given test expressed as a callback.
      *
      * @param callable $callback A callback with the following signature:
      * ```
@@ -57,7 +57,7 @@ interface ReadableCollectionInterface extends Countable, IteratorAggregate
     public function except(array $keys) : CollectionInterface;
 
     /**
-     * Return the first element in the collection or default if the collection is empty.
+     * Returns the first element in the collection or default if the collection is empty.
      *
      * @param mixed $default
      *
@@ -124,7 +124,8 @@ interface ReadableCollectionInterface extends Countable, IteratorAggregate
     public function isEmpty() : bool;
 
     /**
-     * Intersect the collection with the given items or collection.
+     * Returns the intersection of the collection with the given items or collection.
+     * The resulting collection will preserve the original collection's keys.
      *
      * @param ReadableCollectionInterface|array $items
      *
@@ -140,7 +141,7 @@ interface ReadableCollectionInterface extends Countable, IteratorAggregate
     public function keys() : CollectionInterface;
 
     /**
-     * Return the last element in the collection or default if the collection is empty.
+     * Returns the last element in the collection or default if the collection is empty.
      *
      * @param mixed $default
      *
@@ -200,7 +201,7 @@ interface ReadableCollectionInterface extends Countable, IteratorAggregate
     public function toJson(int $options = 0) : string;
 
     /**
-     * Union the collection with the given items or collection.
+     * Returns the union of the collection with the given items or collection.
      * If the given items contains keys that are already in the original
      * collection, the original collection's values will be preferred.
      *
@@ -219,6 +220,7 @@ interface ReadableCollectionInterface extends Countable, IteratorAggregate
 
     /**
      * Filter the collection using the given callback.
+     * This method preserves the original keys.
      *
      * @param callable $callback A callback with the following signature:
      * ```

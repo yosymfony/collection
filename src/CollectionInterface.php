@@ -14,7 +14,7 @@ namespace Yosymfony\Collection;
 interface CollectionInterface extends EditableCollectionInterface, ReadableCollectionInterface
 {
     /**
-     * Returns a not-editable collection.
+     * Returns a read-only collection.
      *
      * @return ReadableCollectionInterface
      */

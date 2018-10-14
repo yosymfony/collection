@@ -15,6 +15,10 @@ The preferred installation method is [composer](https://getcomposer.org):
 composer require yosymfony/collection
 ```
 
+## Documentation
+
+See [docs](doc/usage.md).
+
 ## Unit tests
 
 You can run the unit tests with the following command:
