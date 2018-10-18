@@ -64,6 +64,8 @@ $collection->add('github-user', 'yosymfony')->all();
 // ['user' => 'Victor', 'github-user' => 'yosymfony']
 ```
 
+An exception `KeyAddedPreviouslyException` will be thrown if the key was added previously.
+
 #### `all`
 
 Returns all the items in the collection.
@@ -171,6 +173,8 @@ If the key is not register in the collection a [`KeyNotFoundException`](https://
 
 If you want to get a default value in case the key does not exists in the collection, use the method [`getOrDefault`](#getOrDefault).
 
+Related methods: [getOnly](#getonly), [getOrDefault](#getordefault), [getDot](#getdot).
+
 #### `getOnly`
 
 Returns a new collection with the items associated with the specified keys.
@@ -183,6 +187,8 @@ $values->all();
 
 // ['user' => 'victor', 'country' => 'Spain']
 ```
+
+Related methods: [get](#get), [getOrDefault](#getordefault), [getDot](#getdot).
 
 #### `getOrDefault`
 
@@ -203,6 +209,8 @@ $value = $collection->getOrDefault('foo', 'default-value');
 
 // default-value
 ```
+
+Related methods: [get](#get), [getOnly](#getonly), [getDot](#getdot).
 
 #### `getDot`
 
@@ -246,9 +254,11 @@ $value = $collection->getDot('users.jack.country', 'unknown-country'));
 // unknown-country
 ```
 
+Related methods: [get](#get), [getOnly](#getonly), [getOrDefault](#getordefault).
+
 #### `getReadOnlyCollection`
 
-Returns a read-only collection.
+Returns a [read-only collection](#read-only-collection).
 
 ```php
 $collection = new MixedCollection([1,2,3]);
@@ -529,9 +539,9 @@ Related methods: [any](#any), [every](#every).
 ## Read-only collection
 
 Represents a read-only collection of elements. Once the elements have been set through the constructor, you
-cannot add or delete or clear the collection. **This collection has the same method that `MixedCollection` but
+cannot add, delete or clear the collection. **This collection has the same method that `MixedCollection` but
 those that came from [`EditableCollectionInterface`](https://github.com/yosymfony/collection/blob/master/src/EditableCollectionInterface.php): `add`, `clear`, `remove`, `set`,
-`shift` and `transform`**. Neither has the method `getReadOnlyCollection`.
+`shift` and `transform`**. It neither has the method `getReadOnlyCollection`.
 
 Interfaces implemented:
 * [ReadableCollectionInterface](https://github.com/yosymfony/collection/blob/master/src/ReadableCollectionInterface.php)
@@ -544,4 +554,14 @@ $collection = new ReadOnlyCollection([1,2,3]);
 $collection->all();
 
 // [1,2,3]
+```
+
+If you try to modify this type of collection using the array style, an exception `AttemptOfModifyingReadOnlyCollectionException`
+will be thrown.
+
+```php
+$collection = new ReadOnlyCollection(['user' => 'Víctor']);
+$collection['user'] = 'Jack';
+
+// AttemptOfModifyingReadOnlyCollectionException
 ```
