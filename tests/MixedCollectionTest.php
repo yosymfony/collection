@@ -93,6 +93,23 @@ class MixedCollectionTest extends TestCase
         $this->assertCount(0, $collection->clear());
     }
 
+    public function testCopyMustReturnACopyOfTheCollection(): void
+    {
+        $array = [
+            'name' => 'Yo! Symfony',
+            'version' => $this->makeCollection([
+                'stable' => '1.0.0',
+            ]),
+        ];
+        
+        $collection = $this->makeCollection($array);
+        $copiedCollection = $collection->copy();
+        $copiedCollection->get('version')->remove('stable');
+
+        $this->assertTrue($copiedCollection->get('version')->isEmpty());
+        $this->assertFalse($collection->get('version')->isEmpty());
+    }
+
     public function testCountMustReturnTheNumberOfItemsInTheCollection() : void
     {
         $collection = $this->makeCollection([

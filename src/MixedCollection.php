@@ -73,6 +73,24 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
+    public function copy() : CollectionInterface
+    {
+        $newCollection = $this->makeCollection([]);
+
+        foreach ($this->items as $key => $value) {
+            if ($value instanceof CollectionInterface) {
+                $value = $value->copy();
+            }
+
+            $newCollection->add($key, $value);
+        }
+
+        return $newCollection;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function every(callable $callback) : bool
     {
         foreach ($this->items as $item) {

@@ -14,6 +14,13 @@ namespace Yosymfony\Collection;
 interface CollectionInterface extends EditableCollectionInterface, ReadableCollectionInterface
 {
     /**
+     * Creates a new collection instance.
+     *
+     * @return CollectionInterface
+     */
+    public function copy() : CollectionInterface;
+
+    /**
      * Returns a read-only collection.
      *
      * @return ReadableCollectionInterface

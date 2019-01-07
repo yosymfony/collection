@@ -107,6 +107,18 @@ $collection->clear()->all();
 
 Related method: [remove](#remove).
 
+
+#### `copy`
+
+Creates a new collection instance. If an item is a Collection, its `copy` method will be invoked.
+
+```php
+$collection = new MixedCollection([1,2,3]);
+$newCollection = $collection->copy();
+
+// [1,2,3]
+```
+
 #### `every`
 
 Finds out if all items pass the given test expressed as a *callback*.
