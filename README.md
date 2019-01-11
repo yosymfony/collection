@@ -17,7 +17,7 @@ composer require yosymfony/collection
 
 ## Documentation
 
-See [docs](doc/usage.md).
+See [docs](docs/usage.md).
 
 ## Unit tests
 
