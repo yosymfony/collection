@@ -23,7 +23,25 @@ interface EditableCollectionInterface
      *
      * @throws KeyAddedPreviouslyException If the key was added previously.
      */
-    public function add($key, $value) : CollectionInterface;
+    public function add($key, $value): CollectionInterface;
+
+    /**
+     * Adds a value to the collection.
+     *
+     * @param mixed $value
+     *
+     * @return CollectionInterface The collection itself.
+     */
+    public function addValue($value): CollectionInterface;
+
+    /**
+     * Adds a range of values to the collection.
+     *
+     * @param iterable $values
+     *
+     * @return CollectionInterface The collection itself.
+     */
+    public function addRangeOfValues(iterable $values): CollectionInterface;
 
     /**
      * Clears all elements in this collection.

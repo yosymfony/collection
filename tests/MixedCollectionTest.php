@@ -24,6 +24,22 @@ class MixedCollectionTest extends TestCase
         $this->assertCount(1, $collection);
     }
 
+    public function testAddValueMustAddAValue(): void
+    {
+        $collection = $this->makeCollection();
+        $collection->addValue('a');
+
+        $this->assertEquals(['a'], $collection->toArray());
+    }
+
+    public function testAddRangeOfValuesMustAddARangeOfValues(): void
+    {
+        $collection = $this->makeCollection(['a']);
+        $collection->addRangeOfValues(['b', 'c']);
+
+        $this->assertEquals(['a', 'b', 'c'], $collection->toArray());
+    }
+
     /**
      * @expectedException Yosymfony\Collection\Exception\KeyAddedPreviouslyException
      * @expectedExceptionMessage The key "name" was added previously.

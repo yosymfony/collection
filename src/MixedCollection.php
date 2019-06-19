@@ -29,9 +29,11 @@ class MixedCollection implements CollectionInterface, ArrayAccess
      *
      * @param array $items The items of the collection.
      */
-    public function __construct(array $items = [])
+    public function __construct(iterable $items = [])
     {
-        $this->items = $items;
+        foreach ($items as $key => $value) {
+            $this->add($key, $value);
+        }
     }
     
     /**
@@ -44,6 +46,28 @@ class MixedCollection implements CollectionInterface, ArrayAccess
         }
 
         $this->set($key, $value);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addValue($value): CollectionInterface
+    {
+        $this->offsetSet(null, $value);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addRangeOfValues(iterable $values): CollectionInterface
+    {
+        foreach ($values as $value) {
+            $this->addValue($value);
+        }
 
         return $this;
     }

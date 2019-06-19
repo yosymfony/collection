@@ -66,6 +66,34 @@ $collection->add('github-user', 'yosymfony')->all();
 
 An exception `KeyAddedPreviouslyException` will be thrown if the key was added previously.
 
+Related methods: [addValue](#addValue), [addRangeOfValues](#addRangeOfValues).
+
+#### `addValue`
+
+Adds a value to the collection.
+
+```php
+$collection = new MixedCollection(['a']);
+$collection->addValue('b')->all();
+
+// ['a', 'b']
+```
+
+Related methods: [add](#add), [addRangeOfValues](#addRangeOfValues).
+
+#### `addRangeOfValues`
+
+Adds a range of values to the collection.
+
+```php
+$collection = new MixedCollection(['a']);
+$collection->addRangeOfValues(['b', 'c'])->all();
+
+// ['a', 'b', 'c']
+```
+
+Related methods: [add](#add), [addValue](#addValue).
+
 #### `all`
 
 Returns all the items in the collection.
