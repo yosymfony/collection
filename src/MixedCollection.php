@@ -17,7 +17,10 @@ use Yosymfony\Collection\Exception\KeyAddedPreviouslyException;
 use Yosymfony\Collection\Exception\KeyNotFoundException;
 
 /**
- * Represents a collection of a set of key and value pairs. Values can be mixed.
+ * Represents a collection of a set of key and value pairs.
+ * Values can be mixed
+ *
+ * @author Víctor Puertas <vpgugr@gmail.com>
  */
 class MixedCollection implements CollectionInterface, ArrayAccess
 {
@@ -163,7 +166,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function firstOrDefault($default = null)
+    public function first($default = null)
     {
         foreach ($this->items as $value) {
             return $value;
@@ -247,14 +250,6 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function getReadOnlyCollection() : ReadableCollectionInterface
-    {
-        return new ReadOnlyCollection($this->items);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function has($key) : bool
     {
         return \key_exists($key, $this->items);
@@ -263,11 +258,15 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function intersect($items) : CollectionInterface
+    public function intersect(iterable $items) : CollectionInterface
     {
-        $itemsFromParameter = is_array($items) ? $items : $this->getArrayFromReadableCollection($items);
+        $newItems = [];
 
-        return $this->makeCollection(array_intersect($this->items, $itemsFromParameter));
+        foreach ($items as $key => $value) {
+            $newItems[$key] = $value;
+        }
+
+        return $this->makeCollection(array_intersect($this->items, $newItems));
     }
 
     /**
@@ -289,9 +288,9 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function lastOrDefault($default = null)
+    public function last($default = null)
     {
-        return $this->reverse()->firstOrDefault($default);
+        return $this->getOrDefault(\array_key_last($this->items), $default);
     }
 
     /**
@@ -369,7 +368,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     public function toArray() : array
     {
         return \array_map(function ($item) {
-            return $item instanceof ReadableCollectionInterface ? $item->toArray() : $item;
+            return $this->isCollection($item) ? $item->toArray() : $item;
         }, $this->items);
     }
 
@@ -396,11 +395,15 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function union($items) : CollectionInterface
+    public function union(iterable $items) : CollectionInterface
     {
-        $itemsFromParameter = is_array($items) ? $items : $this->getArrayFromReadableCollection($items);
+        $newItems = [];
 
-        return $this->makeCollection($this->items + $itemsFromParameter);
+        foreach ($items as $key => $value) {
+            $newItems[$key] = $value;
+        }
+
+        return $this->makeCollection($this->items + $newItems);
     }
 
     /**
@@ -497,7 +500,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
         return new MixedCollection($items);
     }
 
-    private function resolveDotPath(array $subPaths, ReadableCollectionInterface $collection, $default)
+    private function resolveDotPath(array $subPaths, CollectionInterface $collection, $default)
     {
         $subPath = array_shift($subPaths);
 
@@ -507,20 +510,20 @@ class MixedCollection implements CollectionInterface, ArrayAccess
 
         $value = $collection->getOrDefault($subPath);
 
-        if (!\is_array($value) && !$this->isReadableCollection($value)) {
+        if (!\is_array($value) && !$this->isCollection($value)) {
             return $default;
         }
 
-        if (\is_array($value) && !$this->isReadableCollection($value)) {
+        if (\is_array($value) && !$this->isCollection($value)) {
             $value = $this->makeCollection($value);
         }
 
         return $this->resolveDotPath($subPaths, $value, $default);
     }
 
-    private function isReadableCollection($value) : bool
+    private function isCollection($value) : bool
     {
-        return $value instanceof ReadableCollectionInterface;
+        return $value instanceof CollectionInterface;
     }
 
     private function getArrayFromReadableCollection(ReadableCollectionInterface $collection) : array

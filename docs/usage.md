@@ -1,12 +1,7 @@
 # Collections usage
 
 Collections make easy to work with array of items. They have 
-[*fluent interface*](https://en.wikipedia.org/wiki/Fluent_interface) and most of their methods return an entirely
-new collection instance. 
-
-## Types
-* [Mixed collection](#mixed-collection)
-* [Read-only collection](#read-only-collection)
+[*fluent interface*](https://en.wikipedia.org/wiki/Fluent_interface) and most of their methods return an entirely new collection instance. 
 
 ## Mixed collection
 
@@ -176,13 +171,13 @@ $fileted->all();
 // ['user' => 'victor'] 
 ```
 
-#### `firstOrDefault`
+#### `first`
 
 Returns the first element in the collection or the default value if the collection is empty.
 
 ```php
 $collection = new MixedCollection(['user' => 'victor', 'role' => 'user']);
-$value = $collection->firstOrDefault();
+$value = $collection->first();
 
 // 'victor'
 ```
@@ -191,12 +186,12 @@ The default value is `null`. You may optionally pass a default value as argument
 
 ```php
 $collection = new MixedCollection();
-$value = $collection->firstOrDefault('default-value');
+$value = $collection->first('default-value');
 
 // 'default-value'
 ```
 
-Related method: [lastOrDefault](#lastOrDefault).
+Related method: [last](#last).
 
 #### `get`
 
@@ -359,13 +354,13 @@ $keys->all();
 
 Related method: [values](#values).
 
-#### `lastOrDefault`
+#### `last`
 
 Returns the last element in the collection or default if the collection is empty.
 
 ```php
 $collection = new MixedCollection(['user' => 'victor', 'role' => 'user']);
-$value = $collection->lastOrDefault();
+$value = $collection->last();
 
 // 'user'
 ```
@@ -374,12 +369,12 @@ The default value is `null`. You may optionally pass a default value as argument
 
 ```php
 $collection = new MixedCollection();
-$value = $collection->lastOrDefault('default-value');
+$value = $collection->last('default-value');
 
 // 'default-value'
 ```
 
-Related method: [firtOrDefault](#firstOrDefault).
+Related method: [firt](#first).
 
 #### `map`
 Iterates through the collection and passes each value to the given *callback*.
@@ -575,33 +570,3 @@ $filtered->all();
 The *callback* function has the following signature: `function (mixed $item, mixed $key) : bool`
 
 Related methods: [any](#any), [every](#every).
-
-## Read-only collection
-
-Represents a read-only collection of elements. Once the elements have been set through the constructor, you
-cannot add, delete or clear the collection. **This collection has the same method that `MixedCollection` but
-those that came from [`EditableCollectionInterface`](https://github.com/yosymfony/collection/blob/master/src/EditableCollectionInterface.php): `add`, `clear`, `remove`, `set`,
-`shift` and `transform`**. It neither has the method `getReadOnlyCollection`.
-
-Interfaces implemented:
-* [ReadableCollectionInterface](https://github.com/yosymfony/collection/blob/master/src/ReadableCollectionInterface.php)
-* [ArrayAccess](http://php.net/manual/en/class.arrayaccess.php)
-
-```php
-use Yosymfony\Collection\MixedCollection;
-
-$collection = new ReadOnlyCollection([1,2,3]);
-$collection->all();
-
-// [1,2,3]
-```
-
-If you try to modify this type of collection using the array style, an exception `AttemptOfModifyingReadOnlyCollectionException`
-will be thrown.
-
-```php
-$collection = new ReadOnlyCollection(['user' => 'Víctor']);
-$collection['user'] = 'Jack';
-
-// AttemptOfModifyingReadOnlyCollectionException
-```

@@ -12,6 +12,8 @@
 namespace Yosymfony\Collection\tests;
 
 use PHPUnit\Framework\TestCase;
+use Yosymfony\Collection\Exception\KeyAddedPreviouslyException;
+use Yosymfony\Collection\Exception\KeyNotFoundException;
 use Yosymfony\Collection\MixedCollection;
 
 class MixedCollectionTest extends TestCase
@@ -40,12 +42,11 @@ class MixedCollectionTest extends TestCase
         $this->assertEquals(['a', 'b', 'c'], $collection->toArray());
     }
 
-    /**
-     * @expectedException Yosymfony\Collection\Exception\KeyAddedPreviouslyException
-     * @expectedExceptionMessage The key "name" was added previously.
-     */
-    public function testAddMustThrowAnExceptionIfTheKeyWasAddedPreviously() : void
+    public function testAddMustFailIfTheKeyWasAddedPreviously() : void
     {
+        $this->expectException(KeyAddedPreviouslyException::class);
+        $this->expectExceptionMessage('The key "name" was added previously.');
+        
         $collection = $this->makeCollection(['name' => 'Yo! Symfony']);
         $collection->add('name', 'Clinton Eastwood');
     }
@@ -153,18 +154,18 @@ class MixedCollectionTest extends TestCase
         ], $noName1Collection->all());
     }
 
-    public function testFirstOrDefaultMustReturnTheFirstElementOfTheCollection() : void
+    public function testFirstMustReturnTheFirstElementOfTheCollection() : void
     {
         $collection = $this->makeCollection([1,2]);
 
-        $this->assertEquals(1, $collection->firstOrDefault());
+        $this->assertEquals(1, $collection->first());
     }
 
-    public function testFirstOrDefaultMustReturnTheDefaultValueWhenTheCollectionIsEmpty() : void
+    public function testFirstMustReturnTheDefaultValueWhenTheCollectionIsEmpty() : void
     {
         $collection = $this->makeCollection();
 
-        $this->assertNull($collection->firstOrDefault());
+        $this->assertNull($collection->first());
     }
 
     public function testgetIteratorMustReturnTheIteratorOfTheCollection() : void
@@ -199,12 +200,11 @@ class MixedCollectionTest extends TestCase
         $this->assertEquals($value, $collection->get(0));
     }
 
-    /**
-     * @expectedException Yosymfony\Collection\Exception\KeyNotFoundException
-     * @expectedExceptionMessage  The Key "fake-key" does not exist in the collection.
-     */
-    public function testGetMustThrowAnExceptionWhenKeyNotFound() : void
+    public function testGetMustFailWhenKeyNotFound() : void
     {
+        $this->expectException(KeyNotFoundException::class);
+        $this->expectExceptionMessage('The Key "fake-key" does not exist in the collection.');
+
         $collection = $this->makeCollection([]);
 
         $collection->get('fake-key');
@@ -324,13 +324,6 @@ class MixedCollectionTest extends TestCase
         $this->assertEquals($defaultValue, $collection->getOrDefault('name2', $defaultValue));
     }
 
-    public function testGetReadOnlyCollectionMustReturnAReadOnlyCollection() : void
-    {
-        $collection = $this->makeCollection([1,2,3]);
-
-        $this->assertCount(3, $collection->getReadOnlyCollection());
-    }
-
     public function testHasMustReturnTrueWhenTheKeyExistsInTheCollection() : void
     {
         $collection = $this->makeCollection([
@@ -389,18 +382,18 @@ class MixedCollectionTest extends TestCase
         $this->assertEquals([0, 1, 2], $collection->keys()->all());
     }
 
-    public function testLastOrDefaultMustReturnTheFirstElementOfTheCollection() : void
+    public function testLastMustReturnTheLastElementOfTheCollection() : void
     {
         $collection = $this->makeCollection([1,2]);
 
-        $this->assertEquals(2, $collection->lastOrDefault());
+        $this->assertEquals(2, $collection->last());
     }
 
-    public function testLastOrDefaultMustReturnTheDefaultValueWhenTheCollectionIsEmpty() : void
+    public function testLastMustReturnTheDefaultValueWhenTheCollectionIsEmpty() : void
     {
         $collection = $this->makeCollection();
 
-        $this->assertNull($collection->lastOrDefault());
+        $this->assertNull($collection->last());
     }
 
     public function testMapMustReturnANewCollectionApplaingTheCallbackToEachItem() : void
@@ -498,7 +491,7 @@ class MixedCollectionTest extends TestCase
         $this->assertEquals($array, $collection->toArray());
     }
 
-    public function testToArrayMustReturTheCollectionAsPlainArrayWhenThereIsACollection() : void
+    public function testToArrayMustReturnTheCollectionAsPlainArrayWhenThereIsACollection() : void
     {
         $collection = $this->makeCollection([
             'section' => 'config',
