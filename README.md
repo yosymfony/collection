@@ -5,7 +5,7 @@ A set of classes for working with arrays of data.
 
 ## Requires
 
-* PHP +7.2
+* PHP +7.3
 
 ## Installation
 

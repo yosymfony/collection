@@ -3,6 +3,7 @@ CHANGELOG
 
 ## 2.0.0 (2019-10-07)
 
+* PHP 7.3 as minimum version.
 * Deleted the class `ReadOnlyCollection`.
 * The interfaces: `EditableCollectionInterface` and `ReadableCollectionInterface` have been
   merged into `CollectionInterface`.
