@@ -24,7 +24,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
     /**
      * Adds a new key to the collection
      *
-     * @param mixed $key Key or index
+     * @param string|int $key Key/index
      * @param mixed $value
      *
      * @return CollectionInterface The collection itself
@@ -101,7 +101,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
      *
      * @param array $keys List of keys
      *
-     * @return CollectionInterface A new collection
+     * @return self A new collection
      */
     public function except(array $keys): self;
 
@@ -117,7 +117,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
     /**
      * Returns the value associated with the key
      *
-     * @param mixed $key
+     * @param string|int $key Key/index
      *
      * @return mixed
      *
@@ -138,7 +138,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
     /**
      * Returns the value associated with the key or default value in case the key does not exists
      *
-     * @param mixed $key
+     * @param string|int $key
      * @param mixed $default
      *
      * @return mixed
@@ -159,7 +159,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
     /**
      * Determines if the item with the key exists in the collection
      *
-     * @param mixed $key Key or index
+     * @param string|int $key Key/index
      *
      * @return bool
      */
@@ -228,7 +228,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
     /**
      * Removes an item from the collection
      *
-     * @param mixed $key Key/index
+     * @param string|int $key Key/index
      *
      * @return self The collection itself
      */
@@ -276,7 +276,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
      *
      * @return array
      */
-    public function toArray() : array;
+    public function toArray(): array;
 
     /**
      * Returns the collection of item as JSON.
@@ -286,7 +286,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
      *
      * @return string
      */
-    public function toJson(int $options = 0) : string;
+    public function toJson(int $options = 0): string;
 
     /**
      * Returns the union of the collection with the given items or collection.
