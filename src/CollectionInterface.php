@@ -41,7 +41,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
      * @return self The collection itself
      */
     public function addRangeOfValues(iterable $values): self;
-    
+
     /**
      * Adds a value to the collection.
      *
@@ -112,7 +112,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
      *
      * @return mixed
      */
-    public function first($default = null);
+    public function first($default = null): mixed;
 
     /**
      * Returns the value associated with the key
@@ -123,7 +123,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
      *
      * @throws KeyNotFoundException
      */
-    public function get($key);
+    public function get($key): mixed;
 
     /**
      * Returns the items associated with the specified keys.
@@ -133,7 +133,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
      *
      * @return self A new collection
      */
-    public function getOnly(array $keys) : self;
+    public function getOnly(array $keys): self;
 
     /**
      * Returns the value associated with the key or default value in case the key does not exists
@@ -143,7 +143,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
      *
      * @return mixed
      */
-    public function getOrDefault($key, $default = null);
+    public function getOrDefault($key, $default = null): mixed;
 
     /**
      * Returns the value at the end of the path or default if an element of the path
@@ -154,7 +154,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
      *
      * @return mixed
      */
-    public function getDot(string $dotPath, $default = null);
+    public function getDot(string $dotPath, $default = null): mixed;
 
     /**
      * Determines if the item with the key exists in the collection
@@ -196,7 +196,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
      *
      * @return mixed
      */
-    public function last($default = null);
+    public function last($default = null): mixed;
 
     /**
      * Iterates through the collection and passes each value to the given callback.
@@ -223,7 +223,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
      *
      * @return mixed
      */
-    public function reduce(callable $callback, $initial = null);
+    public function reduce(callable $callback, $initial = null): mixed;
 
     /**
      * Removes an item from the collection
@@ -256,7 +256,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
      *
      * @return mixed
      */
-    public function shift();
+    public function shift(): mixed;
 
     /**
      * Iterates over the collection and calls the given callback

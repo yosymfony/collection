@@ -38,11 +38,11 @@ class MixedCollection implements CollectionInterface, ArrayAccess
             $this->add($key, $value);
         }
     }
-    
+
     /**
      * {@inheritdoc}
      */
-    public function add($key, $value) : CollectionInterface
+    public function add($key, $value): CollectionInterface
     {
         if ($this->has($key)) {
             throw new KeyAddedPreviouslyException("The key \"{$key}\" was added previously.", $key);
@@ -78,7 +78,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function all() : array
+    public function all(): array
     {
         return $this->items;
     }
@@ -86,7 +86,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function any(callable $callback) : bool
+    public function any(callable $callback): bool
     {
         foreach ($this->items as $item) {
             if ($callback($item) === true) {
@@ -100,7 +100,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function copy() : CollectionInterface
+    public function copy(): CollectionInterface
     {
         $newCollection = $this->makeCollection([]);
 
@@ -118,7 +118,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function every(callable $callback) : bool
+    public function every(callable $callback): bool
     {
         foreach ($this->items as $item) {
             if ($callback($item) === false) {
@@ -132,7 +132,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function clear() : CollectionInterface
+    public function clear(): CollectionInterface
     {
         $this->items = [];
 
@@ -144,7 +144,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
      *
      * @return int
      */
-    public function count() : int
+    public function count(): int
     {
         return count($this->items);
     }
@@ -152,7 +152,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function except(array $keys) : CollectionInterface
+    public function except(array $keys): CollectionInterface
     {
         $collection = $this->makeCollection($this->items);
 
@@ -166,7 +166,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function first($default = null)
+    public function first($default = null): mixed
     {
         foreach ($this->items as $value) {
             return $value;
@@ -178,7 +178,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function get($key)
+    public function get($key): mixed
     {
         if (\key_exists($key, $this->items) === false) {
             throw new KeyNotFoundException("The Key \"{$key}\" does not exist in the collection.", $key);
@@ -190,7 +190,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function getDot(string $dotPath, $default = null)
+    public function getDot(string $dotPath, $default = null): mixed
     {
         if ($dotPath === '') {
             return $default;
@@ -212,7 +212,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function getOnly(array $keys) : CollectionInterface
+    public function getOnly(array $keys): CollectionInterface
     {
         $collection = $this->makeCollection([]);
 
@@ -228,7 +228,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function getOrDefault($key, $default = null)
+    public function getOrDefault($key, $default = null): mixed
     {
         if (\key_exists($key, $this->items) === false) {
             return $default;
@@ -242,7 +242,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     *
     * @return ArrayIterator
     */
-    public function getIterator() : ArrayIterator
+    public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->items);
     }
@@ -250,7 +250,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function has($key) : bool
+    public function has($key): bool
     {
         return \key_exists($key, $this->items);
     }
@@ -258,7 +258,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function intersect(iterable $items) : CollectionInterface
+    public function intersect(iterable $items): CollectionInterface
     {
         $newItems = [];
 
@@ -272,7 +272,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return $this->count() == 0;
     }
@@ -280,7 +280,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function keys() : CollectionInterface
+    public function keys(): CollectionInterface
     {
         return $this->makeCollection(array_keys($this->items));
     }
@@ -288,7 +288,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function last($default = null)
+    public function last($default = null): mixed
     {
         return $this->getOrDefault(\array_key_last($this->items), $default);
     }
@@ -296,7 +296,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback) : CollectionInterface
+    public function map(callable $callback): CollectionInterface
     {
         $items = [];
 
@@ -310,7 +310,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function reduce(callable $callback, $initial = null)
+    public function reduce(callable $callback, $initial = null): mixed
     {
         $carry = $initial;
         $isFirstItem = true;
@@ -329,7 +329,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function remove($key) : CollectionInterface
+    public function remove($key): CollectionInterface
     {
         unset($this->items[$key]);
 
@@ -339,7 +339,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function reverse() : CollectionInterface
+    public function reverse(): CollectionInterface
     {
         return $this->makeCollection(\array_reverse($this->items, true));
     }
@@ -347,7 +347,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function set($key, $value) : CollectionInterface
+    public function set($key, $value): CollectionInterface
     {
         $this->items[$key] = $value;
 
@@ -357,7 +357,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function shift()
+    public function shift(): mixed
     {
         return \array_shift($this->items);
     }
@@ -365,7 +365,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function toArray() : array
+    public function toArray(): array
     {
         return \array_map(function ($item) {
             return $this->isCollection($item) ? $item->toArray() : $item;
@@ -375,7 +375,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function toJson(int $options = 0) : string
+    public function toJson(int $options = 0): string
     {
         return json_encode($this->toArray(), $options);
     }
@@ -383,7 +383,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function transform(callable $callback) : CollectionInterface
+    public function transform(callable $callback): CollectionInterface
     {
         foreach ($this->items as $key => $item) {
             $this->items[$key] = $callback($item);
@@ -395,7 +395,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function union(iterable $items) : CollectionInterface
+    public function union(iterable $items): CollectionInterface
     {
         $newItems = [];
 
@@ -409,7 +409,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function values() : CollectionInterface
+    public function values(): CollectionInterface
     {
         return $this->makeCollection(array_values($this->items));
     }
@@ -417,7 +417,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function where(callable $callback) : CollectionInterface
+    public function where(callable $callback): CollectionInterface
     {
         $arrayFiltered = \array_filter($this->items, $callback, ARRAY_FILTER_USE_BOTH);
 
@@ -433,7 +433,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
      *
      * @return bool
      */
-    public function offsetExists($key) : bool
+    public function offsetExists(mixed $key): bool
     {
         return $this->has($key);
     }
@@ -447,7 +447,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($key)
+    public function offsetGet(mixed $key): mixed
     {
         return $this->get($key);
     }
@@ -462,7 +462,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($key, $value) : void
+    public function offsetSet(mixed $key, mixed $value): void
     {
         if (is_null($key)) {
             $this->items[] = $value;
@@ -480,7 +480,7 @@ class MixedCollection implements CollectionInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($key) : void
+    public function offsetUnset(mixed $key): void
     {
         unset($this->items[$key]);
     }
@@ -490,12 +490,12 @@ class MixedCollection implements CollectionInterface, ArrayAccess
      *
      * @return string
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->toJson();
     }
 
-    protected function makeCollection(array $items) : CollectionInterface
+    protected function makeCollection(array $items): CollectionInterface
     {
         return new MixedCollection($items);
     }
@@ -521,12 +521,12 @@ class MixedCollection implements CollectionInterface, ArrayAccess
         return $this->resolveDotPath($subPaths, $value, $default);
     }
 
-    private function isCollection($value) : bool
+    private function isCollection($value): bool
     {
         return $value instanceof CollectionInterface;
     }
 
-    private function getArrayFromReadableCollection(ReadableCollectionInterface $collection) : array
+    private function getArrayFromReadableCollection(ReadableCollectionInterface $collection): array
     {
         return $collection->toArray();
     }
